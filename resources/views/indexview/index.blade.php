@@ -3,7 +3,7 @@
 @section('main')
     <main>
         <?php foreach($productForIndex as $product): ?>
-            <form method="POST">
+            <form method="post" action= "{{url('index')}}">
                 @csrf
                 <div class="product">
                     <div>

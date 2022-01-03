@@ -3,7 +3,7 @@
 @section('main')
     <main>
         <?php foreach($productForCart as $product): ?>
-        <form method="POST">
+        <form method="post" action= "{{url('cart')}}">
             @csrf
             <div class="product">
                 <div>
@@ -22,7 +22,8 @@
             </div>
         </form>
         <?php endforeach;?>
-        <form method="POST">
+        <form method="POST" action= "{{url('cart')}}">
+            @csrf
             <div class="checkout-details">
                 <input type="text" id="name" name="name" placeholder="Name"
                        value="<?= $name ?>">
@@ -33,8 +34,9 @@
                        value="<?= $comments ?>">
             </div>
             <div class="checkout">
-                <a href="/index">Go to index</a>
+                <a href="index" id="index">Go to index</a>
                 <input type="submit" name="checkout" value="Checkout">
             </div>
+        </form>
     </main>
 @endsection

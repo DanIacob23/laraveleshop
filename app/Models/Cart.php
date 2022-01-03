@@ -9,7 +9,7 @@ class Cart extends Model
 
     public function getAllInCartProducts($cartSession)
     {
-        $query = Index::select('*')->whereIn('id', $cartSession)->get()->toArray();
+        $query = Index::select('*')->whereIn('id', array_keys($cartSession))->get()->toArray();
         return $query;
     }
 }

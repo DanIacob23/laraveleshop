@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,9 +15,7 @@ use App\Http\Controllers\CartController;
 |
 */
 
-Route::any('/index', [IndexController::class, 'setCartSession']);
-Route::any('/index', [IndexController::class, 'showNotInCart']);
-Route::any('/cart', [CartController::class, 'getSession']);
-Route::any('/cart', [CartController::class, 'showInCartProducts']);
-
+Route::match(['get', 'post'],'/index', [IndexController::class, 'showNotInCart'])->name('index');
+Route::match(['get', 'post'],'/cart', [CartController::class, 'showInCartProducts']);
+Route::any('/login', [LoginController::class, 'checkLogin'])->name('login');
 
