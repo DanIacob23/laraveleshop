@@ -12,7 +12,7 @@ class CartController extends Controller
     function showInCartProducts(Request $request)
     {
         if ($request->input('removeToCart')) {
-            $request->session()->forget('cartSession.'.$request->input('id'));
+            $request->session()->forget('cartSession.' . $request->input('id'));
             //return redirect()->route('/index');
         }
         $cartSession = $request->session()->get('cartSession');
@@ -24,11 +24,10 @@ class CartController extends Controller
 
         if ($request->input('checkout')) {
             Mail::to('noreply@example.com')
-               ->send(new CartDetails());
+                ->send(new CartDetails());
 
-             view('emails.cartDetails', [
-                'orderProducts' => $productsForCart,
-            ]);
+            $request->session()->flush();
+            //catre order si validare date
         }
 
         return view('cartview.cart', [
