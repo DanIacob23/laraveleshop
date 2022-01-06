@@ -75,3 +75,7 @@ input{
 #errColor{
     color: red;
 }
+
+#description{
+    height: 5rem;
+}

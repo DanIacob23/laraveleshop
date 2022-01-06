@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +19,9 @@ use App\Http\Controllers\LoginController;
 */
 
 Route::match(['get', 'post'],'/index', [IndexController::class, 'showNotInCart'])->name('index');
-Route::match(['get', 'post'],'/cart', [CartController::class, 'showInCartProducts']);
+Route::match(['get', 'post'],'/cart', [CartController::class, 'showInCartProducts'])->name('cart');
+Route::match(['get', 'post'],'/products', [ProductsController::class, 'showAllProductsInfo'])->name('products');
+Route::match(['get', 'post'],'/product',[ProductController::class, 'workWithProduct'])->name('product');
+Route::match(['get', 'post'],'/order',[OrderController::class, 'showOrder'])->name('order');
 Route::any('/login', [LoginController::class, 'checkLogin'])->name('login');
 

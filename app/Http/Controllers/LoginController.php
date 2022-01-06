@@ -13,7 +13,7 @@ class LoginController extends Controller
         if ($request->input('uname') == 'admin' && $request->input('pass') == 'admin') {
             $request->session()->put('adminLogin', true);
             //redirect to products
-            return redirect()->route('login');
+            return redirect()->route('products');
         }
         return view('loginview.login');
     }

@@ -10,7 +10,27 @@ class Cart extends Model
 
     public function getAllInCartProducts($cartSession)
     {
-        $query = Index::select('*')->whereIn('id', array_keys($cartSession))->get()->toArray();
+        $query = Cart::select('*')->whereIn('id', array_keys($cartSession))->get()->toArray();
         return $query;
     }
+
+    public function insertNewOrder($userName, $details, $comments,$date,$cartProductIds)
+    {
+        $this->table = 'orders';
+        Cart::insert([
+            ['userName' => $userName, 'contactDetails' => $details, 'comments' => $comments,'datetime' => $date]
+        ]);
+
+        $this->table = 'pivot_order';
+        $lastRow = Product::latest('id')->first();
+
+        foreach($cartProductIds as $id){
+            Cart::insert([
+                ['idProd' => $id, 'idOrder' => $lastRow]
+            ]);
+        }
+
+        return $lastRow['id'];
+    }
+
 }

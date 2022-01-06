@@ -22,7 +22,7 @@
             </div>
         </form>
         <?php endforeach;?>
-        <form method="POST" action= "{{url('cart')}}">
+        <form method="POST">
             @csrf
             <div class="checkout-details">
                 <input type="text" id="name" name="name" placeholder="Name"
@@ -32,9 +32,18 @@
                        value="<?= $contactDetails ?>">
                 <input type="text" id="comments" name="comments" size="50" placeholder="Comments"
                        value="<?= $comments ?>">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
             <div class="checkout">
-                <a href="index" id="index">Go to index</a>
+                <a href="{{ route('index') }}" id="index">Go to index</a>
                 <input type="submit" name="checkout" value="Checkout">
             </div>
         </form>

@@ -6,36 +6,65 @@ use App\Mail\CartDetails;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\ValidationException;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
+use  Illuminate\Support\MessageBag;
+use Illuminate\Support\Facades\Redirect;
 
 class CartController extends Controller
 {
+    static $data = [];
+    static $clientName ;
+    static $contactDetails ;
+    static  $comments ;
+
     function showInCartProducts(Request $request)
     {
         if ($request->input('removeToCart')) {
             $request->session()->forget('cartSession.' . $request->input('id'));
-            //return redirect()->route('/index');
+            return redirect()->route('cart');
         }
         $cartSession = $request->session()->get('cartSession');
+
         $inCartProducts = new Cart();
+
         $productsForCart = $inCartProducts->getAllInCartProducts($cartSession);
-        $name = $request->input('name') ? $request->input('name') : '';
+
+        self::$data = $productsForCart;
+        if ($request->input('name')){
+            self::$clientName = $request->input('name');
+        }
         $contactDetails = $request->input('contactDetails') ? $request->input('contactDetails') : '';
         $comments = $request->input('comments') ? $request->input('comments') : '';
 
         if ($request->input('checkout')) {
-            Mail::to('noreply@example.com')
-                ->send(new CartDetails());
-
-            $request->session()->flush();
-            //catre order si validare date
+            $validated = $request->validate([
+                'name' => 'required',
+                'contactDetails' => 'required',
+                'comments' => 'required',
+            ]);
+            if (count($validated) > 0) {
+                self::$clientName = $request->input('name');
+                self::$contactDetails = $request->input('contactDetails');
+                $lastIdInOrders = $inCartProducts->insertNewOrder(self::$clientName, self::$contactDetails, $request->input('comments'), date("Y/m/d"),array_keys($cartSession));
+                Mail::to('noreply@example.com')
+                    ->send(new CartDetails());
+                $request->session()->flush();
+                return Redirect::to('order?lastOrderId=' . $lastIdInOrders);
+            }
         }
 
         return view('cartview.cart', [
             'productForCart' => $productsForCart,
-            'name' => $name,
-            'contactDetails' => $contactDetails,
-            'comments' => $comments
+            'name' => self::$clientName,
+            'contactDetails' => self::$contactDetails,
+            'comments' => self::$comments
         ]);
+    }
+
+    function getData()
+    {
+        return ['cartProducts' => self::$data, 'clientName' => self::$clientName, 'contactDetails' => self::$contactDetails];
     }
 }
 

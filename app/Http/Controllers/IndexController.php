@@ -13,7 +13,6 @@ class IndexController extends Controller
         if (empty($cartSession)) {
             $request->session()->put('cartSession', []);
         }
-        //$request->session()->put('cartSession', []);
         if ($request->input('addCart')) {
             $id = $request->input('id');
             $cartSession = $request->session()->get('cartSession');
