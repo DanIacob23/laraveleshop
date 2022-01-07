@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ asset('css/utils.css')}}" rel="stylesheet">
-    <title>Login</title>
+    <title>{{__('eng.login')}}</title>
 </head>
 <body class="antialiased">
 @yield('main')

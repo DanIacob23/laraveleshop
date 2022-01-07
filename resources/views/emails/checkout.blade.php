@@ -3,8 +3,7 @@
     Your order has been shipped!
     @foreach ( $cartProducts['cartProducts'] as $product)
     ![Alt text](./images/{{$product['id']}}{{$product['fileType']}})
-    ![image info](./images/1.jpg)
-    ![alt text for screen readers](./images/1.jpg "Text to show on mouseover")
+    ![Alt text](/path/to/img.jpg)
     Title  {{$product['title']}}
     Description  {{$product['description']}}
     Price  {{$product['price']}}

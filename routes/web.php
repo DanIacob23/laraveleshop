@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrdersController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +23,6 @@ Route::match(['get', 'post'],'/index', [IndexController::class, 'showNotInCart']
 Route::match(['get', 'post'],'/cart', [CartController::class, 'showInCartProducts'])->name('cart');
 Route::match(['get', 'post'],'/products', [ProductsController::class, 'showAllProductsInfo'])->name('products');
 Route::match(['get', 'post'],'/product',[ProductController::class, 'workWithProduct'])->name('product');
-Route::match(['get', 'post'],'/order',[OrderController::class, 'showOrder'])->name('order');
-Route::any('/login', [LoginController::class, 'checkLogin'])->name('login');
-
+Route::match(['get'],'/order',[OrderController::class, 'showOrder'])->name('order');
+Route::match(['get'],'/orders',[OrdersController::class, 'showAllOrders'])->name('orders');
+Route::match(['get', 'post'],'/login', [LoginController::class, 'checkLogin'])->name('login');

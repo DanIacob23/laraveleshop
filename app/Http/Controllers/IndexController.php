@@ -15,7 +15,6 @@ class IndexController extends Controller
         }
         if ($request->input('addCart')) {
             $id = $request->input('id');
-            $cartSession = $request->session()->get('cartSession');
             if (array_key_exists($id, $cartSession)) {
                 //if already exists
                 $cartSession[$id] = strval(intval($cartSession[$id]) + 1);
@@ -27,7 +26,6 @@ class IndexController extends Controller
             return redirect()->route('index');
         }
 
-        $cartSession = $request->session()->get('cartSession');
         $pre_expedition = new Index();
         $productsForIndex = $pre_expedition->getAllProductsNotInCart($cartSession);
         return view('indexview.index', [
