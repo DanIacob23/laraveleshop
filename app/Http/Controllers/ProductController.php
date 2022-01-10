@@ -33,7 +33,7 @@ class ProductController extends Controller
 
         // Check file size
         if ($_FILES['fileToUpload']['size'] > 5000000) {
-            $checkImg ='File too large';
+            $checkImg = 'File too large';
             $uploadOk = 0;
         }
 
@@ -63,7 +63,7 @@ class ProductController extends Controller
     function insertNewImage($lastId)
     {
         $checkImg = '';
-        $target_dir = "../public/images/";
+        $target_dir = '../storage/app/public/images/';
         $target_file = $target_dir . basename($_FILES['fileToUpload']['name']);
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
         $target_file = $target_dir . strval($lastId) . '.' . $imageFileType;
@@ -127,9 +127,9 @@ class ProductController extends Controller
                     $editId = request('editId');
                     $product->productUpdate($editId, $title, $description, $price);
                     if ($_FILES['fileToUpload']['name'] != '') {
-                        $oldPath = '../public/images/' . $editId . $productAbout[0]['fileType'];// remove old image
+                        $oldPath = '../storage/app/public/images/' . $editId . $productAbout[0]['fileType'];// remove old image
                         $extension = '.' . pathinfo(basename($_FILES['fileToUpload']['name']), PATHINFO_EXTENSION);//new extension
-                        $checkImg = $this->updateImage($editId, '../public/images/' . $editId . $extension, $oldPath);//keep old name and update image
+                        $checkImg = $this->updateImage($editId, '../storage/app/public/images/' . $editId . $extension, $oldPath);//keep old name and update image
                     }
                     return redirect()->route('products');
                     //otherwise, it keeps the old image
@@ -147,9 +147,9 @@ class ProductController extends Controller
             }
         }
         if (request('editId')) {
-             $request->input('title', 'Sally');
-             $request->input('description', 'Sally');
-             $request->input('price', 'Sally');
+            $request->input('title', 'Sally');
+            $request->input('description', 'Sally');
+            $request->input('price', 'Sally');
             return view('producteditview.productedit', [
                 'productForEdit' => $productAbout
             ]);

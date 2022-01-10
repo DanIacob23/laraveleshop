@@ -7,7 +7,7 @@
             @csrf
             <div class="product">
                 <div>
-                    <img class="img-product" src="./images/<?= $product['id'] ?><?= $product['fileType'] ?>"
+                    <img class="img-product" src="{{asset('storage/images/'.$product['id'].$product['fileType'])}}"
                          alt="{{__('eng.prodImg')}}">
                 </div>
                 <div class="infos">

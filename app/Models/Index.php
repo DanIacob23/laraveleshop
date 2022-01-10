@@ -10,7 +10,7 @@ class Index extends Model
 
     public function getAllProductsNotInCart($cartSession)
     {
-        $query = Index::select('*')->whereNotIn('id', array_keys($cartSession))->get()->toArray();
+        $query = Index::select('*')->whereNotIn('id', $cartSession)->get()->toArray();
         return $query;
     }
 

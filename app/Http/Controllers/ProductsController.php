@@ -19,13 +19,13 @@ class ProductsController extends Controller
         }
         if ($request->input('deleteId')) {
             $deleteId = $request->input('deleteId');
-            if (unlink('../public/images/' .$deleteId . '.jpg')) {
+            if (unlink('../storage/app/public/images/' . $deleteId . '.jpg')) {
                 $prod->deleteProductFromProducts($deleteId);
                 $prod->deleteProductFromOrders($deleteId);
                 $request->session()->forget('cartSession.' . $deleteId);//remove from cart
                 return redirect()->route('products');
             } else {
-                unlink('../public/images/' . $deleteId . '.png');
+                unlink('../storage/app/public/images/' . $deleteId . '.png');
                 $prod->deleteProductFromProducts($deleteId);
                 $prod->deleteProductFromOrders($deleteId);
                 $request->session()->forget('cartSession.' . $deleteId);//remove from cart

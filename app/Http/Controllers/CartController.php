@@ -62,6 +62,7 @@ class CartController extends Controller
 
     function getData()
     {
+        //for email data
         return ['cartProducts' => self::$data, 'clientName' => self::$clientName, 'contactDetails' => self::$contactDetails];
     }
 }

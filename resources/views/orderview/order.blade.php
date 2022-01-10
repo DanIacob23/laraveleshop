@@ -15,7 +15,7 @@
                 <div class="product">
                     <div>
                         <img class="img-product"
-                             src="./images/<?= $item['id'] ?><?= $item['fileType'] ?>"
+                             src="{{asset('storage/images/'.$item['id'].$item['fileType'])}}"
                              alt="{{__('eng.prodImg')}}">
                     </div>
                     <div class="infos">

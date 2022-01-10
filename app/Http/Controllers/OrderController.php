@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\Order;
+
 class OrderController extends Controller
 {
-    public function showOrder(){
+    public function showOrder()
+    {
         $order = new Order();
         if (request('lastOrderId')) {
             $lastOrderId = request('lastOrderId');

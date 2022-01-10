@@ -10,8 +10,9 @@ class IndexController extends Controller
     public function showNotInCart(Request $request)
     {
         $cartSession = $request->session()->get('cartSession');
-        if (empty($cartSession)) {
+        if (!$cartSession) {
             $request->session()->put('cartSession', []);
+            $cartSession = $request->session()->get('cartSession');
         }
         if ($request->input('addCart')) {
             $id = $request->input('id');
@@ -27,10 +28,11 @@ class IndexController extends Controller
         }
 
         $pre_expedition = new Index();
-        $productsForIndex = $pre_expedition->getAllProductsNotInCart($cartSession);
+        $productsForIndex = $pre_expedition->getAllProductsNotInCart(array_keys($cartSession));
         return view('indexview.index', [
             'productForIndex' => $productsForIndex
         ]);
+
     }
 
 }
