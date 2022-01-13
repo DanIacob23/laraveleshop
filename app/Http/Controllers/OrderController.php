@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Product;
 
 class OrderController extends Controller
 {
     public function showOrder()
     {
-        $order = new Order();
         if (request('lastOrderId')) {
             $lastOrderId = request('lastOrderId');
-            $data = $order->leftJoinProducts($lastOrderId);
+            $data= Order::with('products')->findOrFail($lastOrderId);
             if (empty($data)) {
                 die('No products in cart');
             }

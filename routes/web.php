@@ -18,11 +18,24 @@ use App\Http\Controllers\OrdersController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::middleware(['user_already_logged_in'])->group(function () {
+    Route::get('/orders',[OrdersController::class, 'showAllOrders'])->name('orders');
 
-Route::match(['get', 'post'],'/index', [IndexController::class, 'showNotInCart'])->name('index');
-Route::match(['get', 'post'],'/cart', [CartController::class, 'showInCartProducts'])->name('cart');
-Route::match(['get', 'post'],'/products', [ProductsController::class, 'showAllProductsInfo'])->name('products');
-Route::match(['get', 'post'],'/product',[ProductController::class, 'workWithProduct'])->name('product');
-Route::match(['get'],'/order',[OrderController::class, 'showOrder'])->name('order');
-Route::match(['get'],'/orders',[OrdersController::class, 'showAllOrders'])->name('orders');
-Route::match(['get', 'post'],'/login', [LoginController::class, 'checkLogin'])->name('login');
+    Route::get('/products', [ProductsController::class, 'renderViewProducts'])->name('products');
+    Route::post('/products', [ProductsController::class, 'showAllProductsInfo'])->name('products');
+
+    Route::get('/product',[ProductController::class, 'renderProductView'])->name('product');
+    Route:: post('/product',[ProductController::class, 'workWithProduct'])->name('productWork');
+});
+
+Route::get('/', [IndexController::class, 'showNotInCart'])->name('index');
+Route::post('/', [IndexController::class, 'addToCart'])->name('indexAdd');
+
+Route::get('/cart', [CartController::class, 'showInCartProducts'])->name('cart');
+Route:: post('/cart', [CartController::class, 'checkoutOrDelete'])->name('cartCheckoutOrDelete');
+
+Route::get('/login', [LoginController::class, 'viewLogin'])->name('login');
+Route::post('/login', [LoginController::class, 'checkLogin'])->name('loginCheckLogin');
+
+Route::get('/order',[OrderController::class, 'showOrder'])->name('order');
+

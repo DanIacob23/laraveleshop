@@ -2,8 +2,8 @@
 
 @section('main')
     <main>
-        <?php foreach($productForIndex as $product): ?>
-        <form method="post" action="{{url('index')}}">
+        @foreach ($productForIndex as $product)
+        <form method="post" action="{{route('index')}}">
             @csrf
             <div class="product">
                 <div>
@@ -11,17 +11,17 @@
                          alt="{{__('eng.prodImg')}}">
                 </div>
                 <div class="infos">
-                    <h3>{{__('eng.title')}} <?= $product['title'] ?></h3>
-                    <p>{{__('eng.description')}} <?= $product['description'] ?></p>
-                    <p id="price">{{__('eng.price')}} <?= $product['price'] ?> $</p>
+                    <h3>{{__('eng.title')}}: {{$product['title']}}</h3>
+                    <p>{{__('eng.description')}}: {{$product['description']}}</p>
+                    <p id="price">{{__('eng.price')}}: {{$product['price']}} $</p>
                 </div>
                 <div>
                     <input type="submit" name="addCart" value="{{__('eng.add')}}">
-                    <input type="hidden" id="id" name="id" value="<?= $product['id'] ?>">
+                    <input type="hidden" id="id" name="id" value="{{$product['id']}}">
                 </div>
             </div>
         </form>
-        <?php endforeach;?>
+        @endforeach
     </main>
-    <a href="cart" id="cart">{{__('eng.goCart')}}</a>
+    <a href="{{route('cart')}}" id="cart">{{__('eng.goCart')}}</a>
 @endsection

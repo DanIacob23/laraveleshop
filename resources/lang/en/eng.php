@@ -32,4 +32,5 @@ return [
 'edit' => 'Edit',
 'delete' => 'Delete',
 'logout' => 'Logout',
+'loginerr' => 'username and password not match',
 ];

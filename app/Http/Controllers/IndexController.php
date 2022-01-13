@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Index;
+use App\Models\Product;
 
 class IndexController extends Controller
 {
-    public function showNotInCart(Request $request)
-    {
+    public function addToCart(Request $request){
         $cartSession = $request->session()->get('cartSession');
         if (!$cartSession) {
             $request->session()->put('cartSession', []);
@@ -26,9 +25,16 @@ class IndexController extends Controller
             $request->session()->put('cartSession', $cartSession);
             return redirect()->route('index');
         }
+    }
+    public function showNotInCart(Request $request)
+    {
 
-        $pre_expedition = new Index();
-        $productsForIndex = $pre_expedition->getAllProductsNotInCart(array_keys($cartSession));
+        $cartSession = $request->session()->get('cartSession');
+        if (!$cartSession) {
+            $request->session()->put('cartSession', []);
+            $cartSession = $request->session()->get('cartSession');
+        }
+        $productsForIndex =  Product::query()->whereNotIn('id', array_keys($cartSession))->get();
         return view('indexview.index', [
             'productForIndex' => $productsForIndex
         ]);

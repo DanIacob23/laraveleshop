@@ -9,6 +9,9 @@ use Illuminate\Queue\SerializesModels;
 use App\Http\Controllers\ CartController;
 class CartDetails extends Mailable
 {
+    public $clientName;
+    public $contactDetails;
+    public $data;
     use Queueable, SerializesModels;
 
     /**
@@ -16,9 +19,12 @@ class CartDetails extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data, $clientName, $contactDetails)
     {
-        //
+        $this->data = $data;
+        $this->clientName = $clientName;
+        $this->contactDetails = $contactDetails;
+
     }
 
     /**
@@ -27,7 +33,7 @@ class CartDetails extends Mailable
      * @return $this
      */
     public function build()
-    {   $cartProducts = new CartController();
-        return $this->markdown('emails.checkout',['cartProducts' => $cartProducts->getData()]);
+    {
+        return $this->markdown('emails.checkout',['cartProducts' => ['cartProducts' => $this->data, 'clientName' => $this->clientName, 'contactDetails' => $this->contactDetails]]);
     }
 }

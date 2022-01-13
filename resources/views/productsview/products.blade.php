@@ -2,8 +2,7 @@
 
 @section('main')
     <main>
-        <?php foreach($allProductsInfo as $product): ?>
-
+            @foreach ($allProductsInfo as $product)
             <div class="product">
                 <div>
                     <img class="img-product" src="{{asset('storage/images/'.$product['id'].$product['fileType'])}}"
@@ -12,9 +11,9 @@
 
                 <table>
                     <div class="infos">
-                        <h3>{{__('eng.title')}}: <?= $product['title'] ?></h3>
-                        <p>{{__('eng.description')}}: <?= $product['description'] ?></p>
-                        <p id="price">{{__('eng.price')}}: <?= $product['price'] ?> $
+                        <h3>{{__('eng.title')}}: {{$product['title']}}</h3>
+                        <p>{{__('eng.description')}}: {{$product['description']}}</p>
+                        <p id="price">{{__('eng.price')}}: {{$product['price']}} $
                     </div>
                 </table>
 
@@ -28,12 +27,11 @@
                     @csrf
                     <div>
                         <input type="submit" name="deleteProduct" value="{{__('eng.delete')}}">
-                        <input type="hidden" id="deleteId" name="deleteId" value="<?= $product['id'] ?>">
+                        <input type="hidden" id="deleteId" name="deleteId" value="{{$product['id']}}">
                     </div>
                 </form>
             </div>
-            <?php endforeach; ?>
-
+            @endforeach
             <div class="optionsAdmin">
                 <a href="{{ route('product') }}" >{{__('eng.add')}}</a>
                 <form method="POST">

@@ -27,7 +27,7 @@
                 <input type="file" name="fileToUpload" id="fileToUpload" accept="image/png, image/jpeg">
             </div>
             <div class="save">
-                <a href="{{ route('products') }}">{{__('eng.products')}}</a>
+                <a href="{{route('products')}}">{{__('eng.products')}}</a>
                 <input type="submit" name="save" value="{{__('eng.save')}}">
             </div>
         </form>

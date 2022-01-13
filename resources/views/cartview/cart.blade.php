@@ -2,8 +2,8 @@
 
 @section('main')
     <main>
-        <?php foreach($productForCart as $product): ?>
-        <form method="post" action="{{url('cart')}}">
+        @foreach ($productForCart as $product)
+        <form method="post" action="{{route('cart')}}">
             @csrf
             <div class="product">
                 <div>
@@ -11,17 +11,17 @@
                          alt="{{__('eng.prodImg')}}">
                 </div>
                 <div class="infos">
-                    <h3>{{__('eng.title')}} <?= $product['title'] ?></h3>
-                    <p>{{__('eng.description')}} <?= $product['description'] ?></p>
-                    <p id="price">{{__('eng.price')}} <?= $product['price'] ?> $</p>
+                    <h3>{{__('eng.title')}}: {{$product['title']}}</h3>
+                    <p>{{__('eng.description')}}: {{$product['description']}}</p>
+                    <p id="price">{{__('eng.price')}}: {{$product['price']}} $</p>
                 </div>
                 <div>
                     <input type="submit" name="removeToCart" value="{{__('eng.remove')}}">
-                    <input type="hidden" id="id" name="id" value="<?= $product['id'] ?>">
+                    <input type="hidden" id="id" name="id" value="{{$product['id']}}">
                 </div>
             </div>
         </form>
-        <?php endforeach;?>
+        @endforeach
         <form method="POST">
             @csrf
             <div class="checkout-details">
@@ -43,7 +43,7 @@
                 @endif
             </div>
             <div class="checkout">
-                <a href="{{ route('index') }}" id="index">{{__('eng.goIndex')}}</a>
+                <a href="{{route('index')}}" id="index">{{__('eng.goIndex')}}</a>
                 <input type="submit" name="checkout" value="{{__('eng.checkout')}}">
             </div>
         </form>
