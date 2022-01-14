@@ -9,7 +9,6 @@ class OrdersController extends Controller
 {
     public function showAllOrders(Request $request)
     {
-
         $data= Order::with('products')->withCount(['products as total' => function($query) {
             $query->select(Product::raw('SUM(price)'));
         }

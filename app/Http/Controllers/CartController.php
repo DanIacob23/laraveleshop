@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Redirect;
 class CartController extends Controller
 {
     function checkoutOrDelete(Request $request){
-
         if ($request->session()->exists('cartSession')) {
             if ($request->input('removeToCart')) {
                 $request->session()->forget('cartSession.' . $request->input('id'));

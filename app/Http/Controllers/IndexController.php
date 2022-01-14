@@ -28,7 +28,6 @@ class IndexController extends Controller
     }
     public function showNotInCart(Request $request)
     {
-
         $cartSession = $request->session()->get('cartSession');
         if (!$cartSession) {
             $request->session()->put('cartSession', []);
@@ -38,7 +37,6 @@ class IndexController extends Controller
         return view('indexview.index', [
             'productForIndex' => $productsForIndex
         ]);
-
     }
 
 }

@@ -9,7 +9,6 @@ class ProductController extends Controller
 {
     public function workWithProduct(Request $request)
     {
-
         if ($request->input('save')) {
             $validated = $request->validate([
                 'title' => 'required',
@@ -47,8 +46,6 @@ class ProductController extends Controller
                 }
             }
         }
-
-
     }
 
     public function renderProductView()
