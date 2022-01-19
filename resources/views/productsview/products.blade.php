@@ -1,42 +1,58 @@
-@extends('productsview.products_layout')
+@extends('./index_layout')
 
+@section('title')
+    <title>{{__('products')}}</title>
+@endsection
 @section('main')
     <main>
             @foreach ($allProductsInfo as $product)
             <div class="product">
+                <!-- For General info -->
+                @component('components.productrender')
+
+                    @slot('id')
+                        {{$product['id']}}
+                    @endslot
+
+                    @slot('fileType')
+                        {{$product['fileType']}}
+                    @endslot
+
+                    @slot('title')
+                        {{$product['title']}}
+                    @endslot
+
+                    @slot('description')
+                        {{$product['description']}}
+                    @endslot
+
+                    @slot('price')
+                        {{$product['price']}}
+                    @endslot
+                @endcomponent
+
+                <br/>
+
+
                 <div>
-                    <img class="img-product" src="{{asset('storage/images/'.$product['id'].$product['fileType'])}}"
-                         alt="{{__('eng.prodImg')}}">
+                    <a href="{{ url('product?editId=' . $product['id']) }}" >{{__('edit')}}</a>
                 </div>
 
-                <table>
-                    <div class="infos">
-                        <h3>{{__('eng.title')}}: {{$product['title']}}</h3>
-                        <p>{{__('eng.description')}}: {{$product['description']}}</p>
-                        <p id="price">{{__('eng.price')}}: {{$product['price']}} $
-                    </div>
-                </table>
 
-
-                <div>
-                    <a href="{{ url('product?editId=' . $product['id']) }}" >{{__('eng.edit')}}</a>
-                </div>
-
-
-                <form method="post" action= "{{url('products')}}">
+                <form method="post" action= "{{route('products')}}">
                     @csrf
                     <div>
-                        <input type="submit" name="deleteProduct" value="{{__('eng.delete')}}">
+                        <input type="submit" name="deleteProduct" value="{{__('delete')}}">
                         <input type="hidden" id="deleteId" name="deleteId" value="{{$product['id']}}">
                     </div>
                 </form>
             </div>
             @endforeach
             <div class="optionsAdmin">
-                <a href="{{ route('product') }}" >{{__('eng.add')}}</a>
+                <a href="{{route('product')}}" >{{__('add')}}</a>
                 <form method="POST">
                     @csrf
-                    <input type="submit" name="adminLogout" value="{{__('eng.logout')}}">
+                    <input type="submit" name="adminLogout" value="{{__('logout')}}">
                 </form>
             </div>
     </main>

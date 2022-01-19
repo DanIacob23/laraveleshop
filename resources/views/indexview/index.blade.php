@@ -1,27 +1,40 @@
-@extends('indexview.index_layout')
+@extends('./index_layout')
+
+@section('title')
+    <title>{{__('index')}}</title>
+@endsection
 
 @section('main')
     <main>
         @foreach ($productForIndex as $product)
-        <form method="post" action="{{route('index')}}">
-            @csrf
             <div class="product">
-                <div>
-                    <img class="img-product" src="{{asset('storage/images/'.$product['id'].$product['fileType'])}}"
-                         alt="{{__('eng.prodImg')}}">
-                </div>
-                <div class="infos">
-                    <h3>{{__('eng.title')}}: {{$product['title']}}</h3>
-                    <p>{{__('eng.description')}}: {{$product['description']}}</p>
-                    <p id="price">{{__('eng.price')}}: {{$product['price']}} $</p>
-                </div>
-                <div>
-                    <input type="submit" name="addCart" value="{{__('eng.add')}}">
-                    <input type="hidden" id="id" name="id" value="{{$product['id']}}">
-                </div>
+                <!-- For General info -->
+                @component('components.productrender')
+                    @slot('id')
+                        {{$product['id']}}
+                    @endslot
+                    @slot('fileType')
+                        {{$product['fileType']}}
+                    @endslot
+                    @slot('title')
+                        {{$product['title']}}
+                    @endslot
+                    @slot('description')
+                        {{$product['description']}}
+                    @endslot
+                    @slot('price')
+                        {{$product['price']}}
+                    @endslot
+                @endcomponent
+                <form method="post" action="{{route('index')}}">
+                    @csrf
+                    <div>
+                        <input type="submit" name="addCart" value="{{__('add')}}">
+                        <input type="hidden" id="id" name="id" value="{{$product['id']}}">
+                    </div>
+                </form>
             </div>
-        </form>
         @endforeach
     </main>
-    <a href="{{route('cart')}}" id="cart">{{__('eng.goCart')}}</a>
+    <a href="{{route('cart')}}" id="cart">{{__('goCart')}}</a>
 @endsection

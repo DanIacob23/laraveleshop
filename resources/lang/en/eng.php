@@ -29,6 +29,7 @@ return [
 'products' => 'Products',
 'save' => 'Save',
 'productEdit' => 'Product Edit',
+'productAdd' => 'Product Add',
 'edit' => 'Edit',
 'delete' => 'Delete',
 'logout' => 'Logout',

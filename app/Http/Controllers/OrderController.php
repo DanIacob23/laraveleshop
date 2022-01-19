@@ -8,18 +8,11 @@ use App\Models\Product;
 
 class OrderController extends Controller
 {
-    public function showOrder()
+    public function showOrder($orderId)
     {
-        if (request('lastOrderId')) {
-            $lastOrderId = request('lastOrderId');
-            $data= Order::with('products')->findOrFail($lastOrderId);
-            if (empty($data)) {
-                die('No products in cart');
-            }
-            return view('orderview.order', [
-                'orderProducts' => $data
-            ]);
-        }
-
+        $data= Order::with('products')->findOrFail($orderId);
+        return view('orderview.order', [
+            'orderProducts' => $data
+        ]);
     }
 }

@@ -1,4 +1,8 @@
-@extends('producteditview.productedit_layout')
+@extends('./index_layout')
+
+@section('title')
+    <title>{{__('productEdit')}}</title>
+@endsection
 
 @section('main')
 
@@ -23,12 +27,12 @@
                 @endif
             </div>
             <div class="upload">
-                <label for="fileToUpload">{{__('eng.selectImg')}}</label>
+                <label for="fileToUpload">{{__('selectImg')}}</label>
                 <input type="file" name="fileToUpload" id="fileToUpload" accept="image/png, image/jpeg">
             </div>
             <div class="save">
-                <a href="{{route('products')}}">{{__('eng.products')}}</a>
-                <input type="submit" name="save" value="{{__('eng.save')}}">
+                <a href="{{route('products')}}">{{__('products')}}</a>
+                <input type="submit" name="save" value="{{__('save')}}">
             </div>
         </form>
     </main>
