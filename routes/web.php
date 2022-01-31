@@ -21,15 +21,16 @@ use App\Http\Controllers\OrdersController;
 Route::middleware(['user_already_logged_in'])->group(function () {
     Route::get('/orders',[OrdersController::class, 'showAllOrders'])->name('orders');
 
-    Route::get('/products', [ProductsController::class, 'renderViewProducts'])->name('products');
-    Route::post('/products', [ProductsController::class, 'showAllProductsInfo'])->name('products');
+    Route::get('/products', [ProductsController::class, 'index'])->name('products');
+    Route::post('/products', [ProductsController::class, 'showAllProductsInfo'])->name('productss');
+    Route::delete('/products/{id}', [ProductsController::class, 'deleteProductFromProducts'])->name('products.delete');
 
-    Route::get('/product',[ProductController::class, 'renderProductView'])->name('product');
-    Route::post('/product',[ProductController::class, 'workWithProduct'])->name('productWork');
+    Route::get('/product/{id}',[ProductController::class, 'view'])->name('product');
+    Route::post('/product/{id}',[ProductController::class, 'workWithProduct'])->name('product.work');
 });
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
-Route::post('/', [IndexController::class, 'addToCart'])->name('indexAdd');
+Route::post('/', [IndexController::class, 'addToCart'])->name('index.add');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::post('/cart', [CartController::class, 'checkout'])->name('cartCheckout');
@@ -37,6 +38,6 @@ Route::delete('/cart/{id}', [CartController::class, 'deleteProduct'])->name('car
 //Route::put('/cart', [CartController::class, 'add'])->name('addToCart');
 
 Route::get('/login', [LoginController::class, 'viewLogin'])->name('login');
-Route::post('/login', [LoginController::class, 'checkLogin'])->name('loginCheckLogin');
+Route::post('/login', [LoginController::class, 'checkLogin'])->name('login.checkLogin');
 
 Route::get('/order/{orderId}',[OrderController::class, 'showOrder'])->name('order');

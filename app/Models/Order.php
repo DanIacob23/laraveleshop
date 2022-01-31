@@ -9,5 +9,15 @@ class Order extends Model
     {
         return $this->belongsToMany(Product::class);
     }
-
+    function deleteFromProductsOrders($idProduct){
+        //delete Product From Products
+        $productForDelete = Product::find($idProduct);
+        $productForDelete->orders()->detach($idProduct);
+        $productForDelete->delete();
+        //delete Product From Orders
+        $productForDelete = Product::find($idProduct);
+        if ($productForDelete) {
+            $productForDelete->orders()->detach();
+        }
+    }
 }

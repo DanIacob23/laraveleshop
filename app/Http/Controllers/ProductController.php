@@ -7,7 +7,7 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
-    public function workWithProduct(Request $request)
+    public function workWithProduct($id, Request $request)
     {
         if ($request->input('save')) {
             $validated = $request->validate([
@@ -20,8 +20,8 @@ class ProductController extends Controller
             $description = $request->input('description');
             $price = $request->input('price');
 
-            if (request('editId')) {// edit
-                $editId = request('editId');
+            if ($id != 'add') {// edit
+                $editId = $id;
                 Product::where('id', $editId)->update(['title' => $title, 'description' => $description, 'price' => $price]);
                 if ($request->file('fileToUpload')) {
                     $file = $request->file('fileToUpload');
@@ -37,8 +37,11 @@ class ProductController extends Controller
                     $file = $request->file('fileToUpload');
                     $extension = $file->getClientOriginalExtension();
                     Product::insert([
-                        ['title' => $title, 'description' => $description, 'price' => $price, 'fileType' => '.' . $extension]
-                    ]);
+                        'title' => $title,
+                        'description' => $description,
+                        'price' => $price,
+                        'fileType' => '.' . $extension
+                        ]);
                     $lastId = Product::latest('id')->first();
                     $request->file('fileToUpload')->storeAs('public/images', strval($lastId['id']) . '.' . $extension);
                     return redirect()->route('products');
@@ -48,17 +51,17 @@ class ProductController extends Controller
         }
     }
 
-    public function renderProductView()
+    public function view($id)
     {
-        if (request('editId')) {
-            $productAbout = Product::all()->where('id', request('editId'))[request('editId') - 1];
-        }
-        if (request('editId')) {
-            return view('producteditview.productedit', [
+        if ($id != 'add') {
+            $productAbout = Product::all()->where('id', $id)[$id - 1];
+            return view('productview.product', [
                 'productForEdit' => $productAbout
             ]);
         } else {
-            return view('productaddview.productadd');
+            return view('productview.product', [
+                'productForEdit' => ['title' => '', 'description' => '', 'price' => '']
+            ]);
         }
     }
 }

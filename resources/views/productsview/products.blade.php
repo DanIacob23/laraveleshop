@@ -35,21 +35,21 @@
 
 
                 <div>
-                    <a href="{{ url('product?editId=' . $product['id']) }}" >{{__('edit')}}</a>
+                    <a href="{{route('product', [ 'id' => $product['id'] ])}}" >{{__('edit')}}</a>
                 </div>
 
 
-                <form method="post" action= "{{route('products')}}">
+                <form method="post" action="{{route('products.delete', [ 'id' => $product['id'] ])}}">
                     @csrf
                     <div>
                         <input type="submit" name="deleteProduct" value="{{__('delete')}}">
-                        <input type="hidden" id="deleteId" name="deleteId" value="{{$product['id']}}">
+                        <input type="hidden" id="method" name="_method" value="delete">
                     </div>
                 </form>
             </div>
             @endforeach
             <div class="optionsAdmin">
-                <a href="{{route('product')}}" >{{__('add')}}</a>
+                <a href="{{route('product', [ 'id' => 'add' ])}}" >{{__('add')}}</a>
                 <form method="POST">
                     @csrf
                     <input type="submit" name="adminLogout" value="{{__('logout')}}">

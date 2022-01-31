@@ -1,7 +1,7 @@
 @extends('./index_layout')
 
 @section('title')
-    <title>{{__('productEdit')}}</title>
+    <title>{{__('product')}}</title>
 @endsection
 
 @section('main')
@@ -10,11 +10,11 @@
         <form method="POST" enctype="multipart/form-data">
             @csrf
             <div class="infos">
-                <input type="text" id="title" name="title" placeholder="title"
+                <input type="text" id="title" name="title" placeholder="{{__('title')}}"
                        value="{{old('title',$productForEdit['title'])}}">
-                <input type="text" id="description" placeholder="description" name="description"
+                <input type="text" id="description" placeholder="{{__('description')}}" name="description"
                        value="{{old('description',$productForEdit['description'])}}">
-                <input type="text" id="price" name="price" placeholder="price"
+                <input type="text" id="price" name="price" placeholder="{{__('price')}}"
                        value="{{old('price',$productForEdit['price'])}}">
                 @if ($errors->any())
                     <div class="alert alert-danger">
