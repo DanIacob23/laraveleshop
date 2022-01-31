@@ -33,7 +33,7 @@ Route::post('/', [IndexController::class, 'addToCart'])->name('indexAdd');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::post('/cart', [CartController::class, 'checkout'])->name('cartCheckout');
-Route::delete('/cart', [CartController::class, 'deleteProduct'])->name('deleteProd');
+Route::delete('/cart/{id}', [CartController::class, 'deleteProduct'])->name('cart.delete');
 //Route::put('/cart', [CartController::class, 'add'])->name('addToCart');
 
 Route::get('/login', [LoginController::class, 'viewLogin'])->name('login');

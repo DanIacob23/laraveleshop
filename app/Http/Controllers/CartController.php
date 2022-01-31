@@ -15,10 +15,9 @@ use Illuminate\Support\Facades\Redirect;
 class CartController extends Controller
 {
 
-    function deleteProduct(Request $request){
-        dd('delete');
+    function deleteProduct($id,Request $request){
         if ($request->input('removeToCart')) {
-            $request->session()->forget('cartSession.' . $request->input('id'));
+            $request->session()->forget('cartSession.' . $id);
             return redirect()->route('cart');
         }
     }
@@ -38,20 +37,19 @@ class CartController extends Controller
                     'comments' => 'required',
                 ]);
 
-                Order::insert([
-                    ['userName' => $clientName, 'contactDetails' => $contactDetails, 'comments' => $comments, 'datetime' => date("Y/m/d")]
+                $order = Order::create([
+                    'userName' => $clientName,
+                    'contactDetails' => $contactDetails,
+                    'comments' => $comments,
+                    'datetime' => date("Y/m/d")
                 ]);
 
-                $lastRowId = Order::latest('id')->first()['id'];
-                foreach (array_keys($cartSession) as $id) {
-                    $user = Product::find($id);
-                    $user->orders()->attach($lastRowId);
-                }
+                $order->products()->sync(array_keys($cartSession));
 
                 Mail::to('noreply@example.com')
                     ->send(new CartDetails($data, $clientName, $contactDetails));
                 $request->session()->forget('cartSession');
-                return redirect()->route('order/' . $lastRowId);
+                return redirect()->route('order', [ 'orderId' => $order->id]);
             }
         }
     }

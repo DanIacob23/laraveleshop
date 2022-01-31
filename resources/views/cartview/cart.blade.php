@@ -26,11 +26,11 @@
                         {{$product['price']}}
                     @endslot
                 @endcomponent
-                <form method="post" action="{{route('cart')}}">
+                <form method="post" action="{{route('cart.delete', [ 'id' => $product['id'] ])}}">
                     @csrf
                     <div>
                         <input type="submit" name="removeToCart" value="{{__('remove')}}">
-                        <input type="hidden" id="id" name="id" value="{{$product['id']}}">
+                        <input type="hidden" id="method" name="_method" value="delete">
                     </div>
                 </form>
             </div>
