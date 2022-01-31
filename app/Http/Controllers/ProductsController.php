@@ -10,12 +10,12 @@ class ProductsController extends Controller
 {
     function deleteFromProductsOrders($idProduct){
         //delete Product From Products
-        $user = Product::find($idProduct);
-        $user->delete();
+        $productForDelete = Product::find($idProduct);
+        $productForDelete->delete();
         //delete Product From Orders
-        $user = Product::find($idProduct);
-        if ($user) {
-            $user->orders()->detach();
+        $productForDelete = Product::find($idProduct);
+        if ($productForDelete) {
+            $productForDelete->orders()->detach();
         }
     }
 

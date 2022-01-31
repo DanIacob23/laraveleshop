@@ -46,7 +46,7 @@ class CartController extends Controller
 
                 $order->products()->sync(array_keys($cartSession));
 
-                Mail::to('noreply@example.com')
+                Mail::to(config('app.admin_email'))
                     ->send(new CartDetails($data, $clientName, $contactDetails));
                 $request->session()->forget('cartSession');
                 return redirect()->route('order', [ 'orderId' => $order->id]);
