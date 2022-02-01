@@ -15,10 +15,10 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('userName');
-            $table->string('contactDetails');
+            $table->string('user_name');
+            $table->string('contact_details');
             $table->string('comments');
-            $table->string('datetime');
+            $table->date('date_time');
             $table->timestamps();
         });
     }

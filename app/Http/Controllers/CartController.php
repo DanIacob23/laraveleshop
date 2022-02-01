@@ -14,6 +14,25 @@ use Illuminate\Support\Facades\Redirect;
 
 class CartController extends Controller
 {
+    public function add(Request $request){
+        $cartSession = $request->session()->get('cartSession', []);
+        if (!$cartSession) {
+            $request->session()->put('cartSession', []);
+            $cartSession = $request->session()->get('cartSession', []);
+        }
+        if ($request->input('addCart')) {
+            $id = $request->input('id');
+            if (array_key_exists($id, $cartSession)) {
+                //if already exists
+                $cartSession[$id] = $cartSession[$id] + 1;
+            } else {
+                $cartSession[$id] = 1;
+            }
+
+            $request->session()->put('cartSession', $cartSession);
+            return redirect()->route('index');
+        }
+    }
 
     function deleteProduct($id,Request $request){
         if ($request->input('removeToCart')) {
@@ -31,6 +50,12 @@ class CartController extends Controller
                 $clientName = $request->input('name');
                 $contactDetails = $request->input('contactDetails');
                 $comments = $request->input('comments');
+                $priceList = [];
+                foreach (array_keys($cartSession) as $key=>$product){
+
+                   $priceList[$product]=['cart_price' =>$data[$key]['price']];
+                }
+
                 $validated = $request->validate([
                     'name' => 'required',
                     'contactDetails' => 'required',
@@ -38,13 +63,13 @@ class CartController extends Controller
                 ]);
 
                 $order = Order::create([
-                    'userName' => $clientName,
-                    'contactDetails' => $contactDetails,
+                    'user_name' => $clientName,
+                    'contact_details' => $contactDetails,
                     'comments' => $comments,
-                    'datetime' => date("Y/m/d")
+                    'date_time' => date("Y/m/d")
                 ]);
 
-                $order->products()->sync(array_keys($cartSession));
+                $order->products()->sync($priceList);
 
                 Mail::to(config('app.admin_email'))
                     ->send(new CartDetails($data, $clientName, $contactDetails));

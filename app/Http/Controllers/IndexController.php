@@ -7,25 +7,6 @@ use App\Models\Product;
 
 class IndexController extends Controller
 {
-    public function addToCart(Request $request){
-        $cartSession = $request->session()->get('cartSession', []);
-        if (!$cartSession) {
-            $request->session()->put('cartSession', []);
-            $cartSession = $request->session()->get('cartSession', []);
-        }
-        if ($request->input('addCart')) {
-            $id = $request->input('id');
-            if (array_key_exists($id, $cartSession)) {
-                //if already exists
-                $cartSession[$id] = $cartSession[$id] + 1;
-            } else {
-                $cartSession[$id] = 1;
-            }
-
-            $request->session()->put('cartSession', $cartSession);
-            return redirect()->route('index');
-        }
-    }
     public function index(Request $request)
     {
         $cartSession = $request->session()->get('cartSession', []);

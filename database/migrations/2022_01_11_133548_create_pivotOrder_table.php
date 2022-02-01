@@ -16,6 +16,7 @@ class CreatePivotOrderTable extends Migration
         Schema::create('order_product', function (Blueprint $table) {
             $table->integer('product_id');
             $table->integer('order_id');
+            $table->integer('cart_price');
             $table->timestamps();
         });
     }

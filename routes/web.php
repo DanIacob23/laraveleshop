@@ -22,7 +22,7 @@ Route::middleware(['user_already_logged_in'])->group(function () {
     Route::get('/orders',[OrdersController::class, 'showAllOrders'])->name('orders');
 
     Route::get('/products', [ProductsController::class, 'index'])->name('products');
-    Route::post('/products', [ProductsController::class, 'showAllProductsInfo'])->name('productss');
+    Route::post('/products', [LoginController::class, 'logout'])->name('productss');
     Route::delete('/products/{id}', [ProductsController::class, 'deleteProductFromProducts'])->name('products.delete');
 
     Route::get('/product/{id}',[ProductController::class, 'view'])->name('product');
@@ -30,7 +30,7 @@ Route::middleware(['user_already_logged_in'])->group(function () {
 });
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
-Route::post('/', [IndexController::class, 'addToCart'])->name('index.add');
+Route::post('/', [CartController::class, 'add'])->name('index.add');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::post('/cart', [CartController::class, 'checkout'])->name('cartCheckout');

@@ -10,12 +10,12 @@
         @foreach  ($ordersProducts as $product)
             @if($product['id'] > 0)
                 <div class="orders">
-                    <p id="datetime">{{__('orderDate')}}: {{$product['datetime']}}</p>
-                    <p>{{__('name')}}: {{$product['userName']}}</p>
-                    <p>{{__('contact details')}}: {{$product['contactDetails']}}</p>
+                    <p id="datetime">{{__('orderDate')}}: {{$product['date_time']}}</p>
+                    <p>{{__('name')}}: {{$product['user_name']}}</p>
+                    <p>{{__('contact details')}}: {{$product['contact_details']}}</p>
                     <p>{{__('comments')}}: {{$product['comments']}}</p>
                     <p>{{__('totalPrice')}}: {{$product['total']}} $</p>
-                    <a href="{{route('order/' . $product['id'])}}">{{__('viewOrder')}}</a>
+                    <a href="{{route('order' , [ 'orderId' => $product['id'] ])}}">{{__('viewOrder')}}</a>
                 </div>
 
             @endif

@@ -28,7 +28,8 @@ class ProductController extends Controller
                     $extension = $file->getClientOriginalExtension();
                     $request->file('fileToUpload')->storeAs('public/images', strval($editId) . '.' . $extension);
                     //update extension
-                    Product::where('id', $editId)->update(['fileType' => $extension]);
+                    $product = Product::findOrFail($editId);
+                    Product::where('id', $editId)->update(['fileType' => '.'.$extension]);
                 }
                 return redirect()->route('products');
                 //otherwise, it keeps the old image
@@ -36,14 +37,13 @@ class ProductController extends Controller
                 if ($request->file('fileToUpload')) {
                     $file = $request->file('fileToUpload');
                     $extension = $file->getClientOriginalExtension();
-                    Product::insert([
+                    $product = Product::create([
                         'title' => $title,
                         'description' => $description,
                         'price' => $price,
                         'fileType' => '.' . $extension
                         ]);
-                    $lastId = Product::latest('id')->first();
-                    $request->file('fileToUpload')->storeAs('public/images', strval($lastId['id']) . '.' . $extension);
+                    $request->file('fileToUpload')->storeAs('public/images', strval($product['id']) . '.' . $extension);
                     return redirect()->route('products');
                 }
             }
@@ -54,9 +54,9 @@ class ProductController extends Controller
     public function view($id)
     {
         if ($id != 'add') {
-            $productAbout = Product::all()->where('id', $id)[$id - 1];
+            $productAbout = Product::all()->where('id', $id)->toArray();
             return view('productview.product', [
-                'productForEdit' => $productAbout
+                'productForEdit' => array_values($productAbout)[0]
             ]);
         } else {
             return view('productview.product', [

@@ -25,13 +25,6 @@ class ProductsController extends Controller
         }
     }
 
-    function showAllProductsInfo(Request $request)
-    {
-        if ($request->input('adminLogout')) {
-            $request->session()->pull('adminLogin', true);
-            return redirect()->route('index');
-        }
-    }
 
     function index(){
         $allProductsInfo = Product::all();

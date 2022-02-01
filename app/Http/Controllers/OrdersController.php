@@ -13,6 +13,8 @@ class OrdersController extends Controller
             $query->select(Product::raw('SUM(price)'));
         }
         ])->groupBy('id')->get()->toArray();
+        /*$data= Order::with('products');*/
+
         return view('ordersview.orders', [
             'ordersProducts' => $data
         ]);
