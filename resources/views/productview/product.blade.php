@@ -28,7 +28,7 @@
             </div>
             <div class="upload">
                 <label for="fileToUpload">{{__('selectImg')}}</label>
-                <input type="file" name="fileToUpload" id="fileToUpload" accept="image/png, image/jpeg">
+                <input type="file" name="fileToUpload" id="fileToUpload">
             </div>
             <div class="save">
                 <a href="{{route('products')}}">{{__('products')}}</a>

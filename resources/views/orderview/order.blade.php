@@ -31,7 +31,7 @@
                                 {{$product['description']}}
                             @endslot
                             @slot('price')
-                                {{$product['price']}}
+                                {{$product['pivot']['cart_price']}}
                             @endslot
                         @endcomponent
                 </div>
